@@ -10,12 +10,45 @@ namespace Logica
     {
         //Crear una clase principal para registrar los datos de un partido determinado
         public List<Arbitro> Arbitros { get; set; }
-        public string Ciudad { get; set; }
+        //3)
+        public string Ciudad { get; private set; }
+        //Si, es necesario modificar el metodo creado,
+        //porque este no puede asignarle un valor a la propiedad que ahora es privada
         public DateTime InicioPartido { get; set; }
         public Equipo EquipoLocal { get; set; }
         public Equipo EquipoVisitante { get; set; }
         public List<Gol> Goles { get; set; }
-        public short TiempoDeJuego { get; set; }
+        public int TiempoDeJuego {
+            //5)
+            get
+            {
+                //6) usar try catch
+                int mayor = 0;
+                foreach (Gol gol in Goles)
+                {
+                    if (gol.Jugador.Edad.HasValue)
+                    {
+                        if (gol.MinutoDeJuego > mayor)
+                            mayor = gol.MinutoDeJuego;
+                    }
+                    
+                    
+                }
+                foreach (Cambio cambio in Cambios)
+                {
+                    if (cambio.MinutoDeJuego > mayor)
+                        mayor = cambio.MinutoDeJuego;
+                }
+                foreach (Tarjeta tarjeta in Tarjetas)
+                {
+                    if (tarjeta.MinutoDeJuego > mayor)
+                        mayor = tarjeta.MinutoDeJuego;
+                }
+
+                return mayor;
+            }
+
+        }
         public List<Cambio> Cambios { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
 
@@ -77,6 +110,15 @@ namespace Logica
             resumenPartido.GolesVisitante = this.Goles.Count(x => x.EsArcoLocal);
 
             return resumenPartido;
+        }
+
+        //4) Destructor
+        ~Partido()
+        {
+            this.Arbitros.Clear();
+            this.Goles.Clear();
+            this.Cambios.Clear();
+            this.Tarjetas.Clear();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Logica
 {
     public class Arbitro : Persona
     {
-        public int PartidosJugados { get; set; }
+        public Nullable<int> PartidosJugados { get; set; }
         public TipoArbitro TipoArbitro { get; set; }
 
         public override bool ProximaARetiro()

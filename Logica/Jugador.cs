@@ -8,8 +8,22 @@ namespace Logica
 {
     public class Jugador : Persona
     {
-        public int Numero { get; set; }
-        public bool EsTitular { get; set; }
+        public Nullable<int> Numero { get; set; }
+        public int NroCamiseta { get; set; }
+        //2) b)
+        public bool EsTitular { 
+            get
+            {
+                return this.EsTitular;
+            }
+            set
+            {
+                if (this.NroCamiseta >= 1 && this.NroCamiseta <= 11)                
+                    this.EsTitular = true;
+                else
+                    this.EsTitular = false;
+            }
+        }
         public Equipo Equipo { get; set; }
         public Posicion Posicion { get; set; }
 
